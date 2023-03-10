@@ -1,0 +1,6 @@
+export enum ActionTypeProduct {
+  LOADING = "LOADING",
+  LOAD_SUCCESS = "LOAD_SUCCESS",
+  LOAD_FAILURE = "LOAD_FAILURE",
+  DELETE_PRODUCT = "DELETE_PRODUCT",
+}
