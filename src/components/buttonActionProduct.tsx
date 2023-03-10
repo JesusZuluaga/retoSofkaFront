@@ -1,5 +1,5 @@
 import { Button, Modal } from "antd";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { useDispatch } from "react-redux";
 import { deleteProduct } from "../app/middleware/payloadProducts";
 import { IButtonAction, IProduct } from "../models/product.interface";
@@ -9,14 +9,13 @@ interface IPropsButton {
   button: IButtonAction;
 }
 
-const ButtonAction: FC<IPropsButton> = ({ data, button }) => {
-
-    const dispatch = useDispatch();
+const ButtonActionProduct: FC<IPropsButton> = ({ data, button }) => {
+  const dispatch = useDispatch();
 
   const validateButton = (button: IButtonAction) => {
     switch (button) {
       case IButtonAction.DELETE:
-        return deleteProduct(dispatch,data.id);
+        return deleteProduct(dispatch, data.id);
       default:
         return null;
     }
@@ -24,11 +23,11 @@ const ButtonAction: FC<IPropsButton> = ({ data, button }) => {
 
   return (
     <>
-      <Button type="primary" onClick={() => validateButton(button)}>
+      <Button type="primary" danger onClick={() => validateButton(button)}>
         {button}
       </Button>
     </>
   );
 };
 
-export default ButtonAction;
+export default ButtonActionProduct;

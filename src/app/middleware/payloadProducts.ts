@@ -8,7 +8,8 @@ import {
   productLoading,
   productLoadSucces,
 } from "../../actions/ActionsProduct";
-import { IPaginProduct, TableParams } from "../../models/product.interface";
+import { IPaginProduct } from "../../models/product.interface";
+import { TableParams } from "../../models/table.interface";
 import { ENDPOINT_BASIC } from "../../utils/Api";
 
 export const loadAllProduct = async (

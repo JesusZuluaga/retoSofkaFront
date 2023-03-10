@@ -4,18 +4,14 @@ import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
 import type { FilterValue, SorterResult } from "antd/es/table/interface";
 import { useDispatch, useSelector } from "react-redux";
 import { loadAllProduct } from "../app/middleware/payloadProducts";
-import { IButtonAction, IProduct, IStateProduct } from "../models/product.interface";
+import {
+  IButtonAction,
+  IProduct,
+  IStateProduct,
+} from "../models/product.interface";
 import { rootReducer } from "../models/reducer.interfaces";
-import ButtonAction from "./buttonAction";
-
-interface TableParams {
-  pagination?: TablePaginationConfig;
-  sortField?: string;
-  sortOrder?: string;
-  filters?: Record<string, FilterValue>;
-}
-
-
+import { TableParams } from "../models/table.interface";
+import ButtonActionProduct from "./buttonActionProduct";
 
 const getRandomuserParams = (params: TableParams) => ({
   results: params.pagination?.pageSize,
@@ -36,7 +32,6 @@ const ProductTable: React.FC = () => {
   const { products } = useSelector<rootReducer, IStateProduct>(
     (state) => state.myProducts
   );
-  const [modal1Open, setModal1Open] = useState(false);
 
   useEffect(() => {
     loadAllProduct(dispatch, getRandomuserParams(tableParams));
@@ -66,7 +61,6 @@ const ProductTable: React.FC = () => {
       filters,
       ...sorter,
     });
-    // `dataSource` is useless since `pageSize` changed
     if (pagination.pageSize !== tableParams.pagination?.pageSize) {
       setData([]);
     }
@@ -81,6 +75,7 @@ const ProductTable: React.FC = () => {
     {
       title: "Estado",
       dataIndex: "enabled",
+      render: (bool) => (bool ? "Disponible" : "No Disponible"),
     },
     {
       title: "Stock",
@@ -98,28 +93,24 @@ const ProductTable: React.FC = () => {
       title: "Action",
       dataIndex: "actions",
       render: (_, record) => (
-       <>
-        <ButtonAction data={record}  button={IButtonAction.DELETE}/>
-       </>
+        <>
+          <ButtonActionProduct data={record} button={IButtonAction.DELETE} />
+        </>
       ),
     },
   ];
 
   return (
-    <>
-    
-    <Table
-      columns={columns}
-      rowKey={(record) => record.id}
-      dataSource={data}
-      pagination={tableParams.pagination}
-      loading={loading}
-      onChange={handleTableChange}
-    />
-
-   
-    </>
-    
+    <div className="home-container">
+      <Table
+        columns={columns}
+        rowKey={(record) => record.id}
+        dataSource={data}
+        pagination={tableParams.pagination}
+        loading={loading}
+        onChange={handleTableChange}
+      />
+    </div>
   );
 };
 

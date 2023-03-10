@@ -9,7 +9,11 @@ interface IPropsNavbar {
 const Navbar: FC<IPropsNavbar> = ({ elements }) => {
   return (
     <div className="nav-bar">
-      <img className="logo" src="/images/logo.png" alt="Logo" />
+      <img
+        className="logo"
+        src="src/resources/carrito de compras.png"
+        alt="Logo"
+      />
 
       <ul className="navbar-links">
         {elements.map((item, index) => {

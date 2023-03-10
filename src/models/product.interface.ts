@@ -1,6 +1,3 @@
-import { TablePaginationConfig } from "antd";
-import { FilterValue } from "antd/es/table/interface";
-
 export interface IProduct {
   id: string;
   name: string;
@@ -15,13 +12,6 @@ export interface IPaginProduct {
   totalElements: number;
 }
 
-export interface TableParams {
-  pagination?: TablePaginationConfig;
-  sortField?: string;
-  sortOrder?: string;
-  filters?: Record<string, FilterValue>;
-}
-
 export interface IStateProduct {
   isLoading: boolean;
   products?: IPaginProduct;
@@ -33,5 +23,3 @@ export enum IButtonAction {
   EDIT = "EDITAR",
   DELETE = "ELIMINAR",
 }
-
-

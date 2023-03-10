@@ -1,5 +1,9 @@
 import { ActionTypeProduct } from "../actions/actionsType/ActionTypeProduct";
-import { IPaginProduct, IProduct, IStateProduct } from "../models/product.interface";
+import {
+  IPaginProduct,
+  IProduct,
+  IStateProduct,
+} from "../models/product.interface";
 
 const initialState: IStateProduct = {
   isLoading: false,
@@ -8,13 +12,13 @@ const initialState: IStateProduct = {
 };
 
 export type ProductActionType =
-  | { type: "LOADING"; payload?: IPaginProduct}
-  | { type: "LOAD_SUCCESS";  payload: IPaginProduct}
-  | { type: "LOAD_FAILURE"; payload: string}
-  | { type: "CREATE_PRODUCT"; payload: IProduct}
-  | { type: "DELETE_PRODUCT"; payload: string};
+  | { type: "LOADING"; payload?: IPaginProduct }
+  | { type: "LOAD_SUCCESS"; payload: IPaginProduct }
+  | { type: "LOAD_FAILURE"; payload: string }
+  | { type: "CREATE_PRODUCT"; payload: IProduct }
+  | { type: "DELETE_PRODUCT"; payload: string };
 
-const ProductReducer = ( state = initialState, action: ProductActionType) => {
+const ProductReducer = (state = initialState, action: ProductActionType) => {
   switch (action.type) {
     case ActionTypeProduct.LOADING:
       return {
@@ -34,16 +38,16 @@ const ProductReducer = ( state = initialState, action: ProductActionType) => {
         error: action.payload,
       };
 
-      case ActionTypeProduct.DELETE_PRODUCT:
-        const product = state.products?.content.filter(
-          (product) => product.id !== action.payload
-        );
-        return {
-          ...state,
-          isLoading: false,
-          error: null,
-          products: { ...state.products?.content, product: product },
-        };
+    case ActionTypeProduct.DELETE_PRODUCT:
+      const product = state.products?.content.filter(
+        (product) => product.id !== action.payload
+      );
+      return {
+        ...state,
+        isLoading: false,
+        error: null,
+        products: { ...state.products?.content, product: product },
+      };
     default:
       return state;
   }
