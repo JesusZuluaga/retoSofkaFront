@@ -9,6 +9,7 @@ const initialState: IStateProduct = {
   isLoading: false,
   products: undefined,
   error: "",
+  productsToShop: undefined,
 };
 
 export type ProductActionType =
@@ -16,7 +17,8 @@ export type ProductActionType =
   | { type: "LOAD_SUCCESS"; payload: IPaginProduct }
   | { type: "LOAD_FAILURE"; payload: string }
   | { type: "CREATE_PRODUCT"; payload: IProduct }
-  | { type: "DELETE_PRODUCT"; payload: string };
+  | { type: "DELETE_PRODUCT"; payload: string }
+  | { type: "ADD_PRODUCT_TO_SHOPPING"; payload: IProduct };
 
 const ProductReducer = (state = initialState, action: ProductActionType) => {
   switch (action.type) {
@@ -48,6 +50,26 @@ const ProductReducer = (state = initialState, action: ProductActionType) => {
         error: null,
         products: { ...state.products?.content, product: product },
       };
+    case ActionTypeProduct.CREATE_PRODUCT:
+      return {
+        ...state,
+        isLoading: false,
+        error: null,
+        products: { ...state.products?.content },
+      };
+    case ActionTypeProduct.ADD_PRODUCT_TO_SHOPPING:
+      let products: Array<IProduct> = state.productsToShop?.productsToBuy !== undefined ? state.productsToShop?.productsToBuy : [];
+        products?.push(action.payload)
+        const result = products.filter((value:IProduct, index: number ) => {
+          return products.indexOf(value) === index
+        });
+        
+        return {
+          ...state,
+          isLoading: false,
+          error: null,
+          productsToShop: { ...state.productsToShop, productsToBuy: result }
+        };
     default:
       return state;
   }

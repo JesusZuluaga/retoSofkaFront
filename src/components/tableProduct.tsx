@@ -12,6 +12,7 @@ import {
 import { rootReducer } from "../models/reducer.interfaces";
 import { TableParams } from "../models/table.interface";
 import ButtonActionProduct from "./buttonActionProduct";
+import AddProductButton from "./AddProductButton";
 
 const getRandomuserParams = (params: TableParams) => ({
   results: params.pagination?.pageSize,
@@ -94,6 +95,7 @@ const ProductTable: React.FC = () => {
       dataIndex: "actions",
       render: (_, record) => (
         <>
+          <AddProductButton data={record} />
           <ButtonActionProduct data={record} button={IButtonAction.DELETE} />
         </>
       ),

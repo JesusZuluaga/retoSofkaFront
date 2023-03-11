@@ -1,8 +1,8 @@
 import axios from "axios";
 import { Dispatch } from "react";
 import { AnyAction } from "redux";
-import { buyLoadError, buyLoading, buyLoadSucces } from "../../actions/ActionsBuy";
-import { IPaginBuy } from "../../models/buy.interface";
+import { buyCreateError, buyCreateSucces, buyLoadError, buyLoading, buyLoadSucces } from "../../actions/ActionsBuy";
+import { IBuy, IPaginBuy } from "../../models/buy.interface";
 import { TableParams } from "../../models/table.interface";
 import { ENDPOINT_BASIC } from "../../utils/Api";
 
@@ -25,12 +25,19 @@ export const loadAllBuy = async (
       },
     })
     .then((buys) => {
-      console.log("loadAllBuy--->", buys);
-      
       dispatch(buyLoadSucces(buys.data));
     })
     .catch((error) => {
-      console.log("loadAllBuy ERRORR--->", error);
       dispatch(buyLoadError(error.data));
     });
 };
+
+export const createBuy = async (dispatch: Dispatch<AnyAction>, buyToCreate: IBuy) => {
+  const url = ENDPOINT_BASIC+"buys/buyProduct";
+  dispatch(buyLoading());
+  await axios.post<IBuy>(url, buyToCreate).then((buy) => {
+    dispatch(buyCreateSucces(buy.data));
+  }). catch((error) => {
+    dispatch(buyCreateError(error.data))
+  })
+}

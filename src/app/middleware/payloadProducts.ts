@@ -2,13 +2,16 @@ import axios from "axios";
 import { Dispatch } from "react";
 import { AnyAction } from "redux";
 import {
+  addProductToShoppingCartSuccess,
+  productCreateError,
+  productCreateSucces,
   productDelectSucces,
   productDeleteError,
   productLoadError,
   productLoading,
   productLoadSucces,
 } from "../../actions/ActionsProduct";
-import { IPaginProduct } from "../../models/product.interface";
+import { IPaginProduct, IProduct } from "../../models/product.interface";
 import { TableParams } from "../../models/table.interface";
 import { ENDPOINT_BASIC } from "../../utils/Api";
 
@@ -16,7 +19,7 @@ export const loadAllProduct = async (
   dispatch: Dispatch<AnyAction>,
   tableParams: TableParams
 ) => {
-  const url = ENDPOINT_BASIC+"product/products";
+  const url = ENDPOINT_BASIC + "product/products";
   dispatch(productLoading());
 
   await axios
@@ -42,7 +45,7 @@ export const deleteProduct = async (
   dispatch: Dispatch<AnyAction>,
   productId: string
 ) => {
-  const url = ENDPOINT_BASIC+"product/deleteProduct/"+productId;
+  const url = ENDPOINT_BASIC + "product/deleteProduct/" + productId;
   dispatch(productLoading());
   await axios
     .delete<string>(url)
@@ -52,4 +55,32 @@ export const deleteProduct = async (
     .catch((error) => {
       dispatch(productDeleteError(error.data));
     });
+};
+
+export const createProduct = async (
+  dispatch: Dispatch<AnyAction>,
+  productTocreate: IProduct
+) => {
+  const url = ENDPOINT_BASIC + `product/saveProduct`;
+  dispatch(productLoading());
+  await axios
+    .post<IProduct>(url, productTocreate)
+    .then((product) => {
+      dispatch(productCreateSucces(product.data));
+    })
+    .catch((error) => {
+      dispatch(productCreateError(error.data));
+    });
+};
+
+export const addProductToShoppingCart = (
+  dispatch: Dispatch<AnyAction>,
+  productToAdd: IProduct
+) => {
+  try {
+    
+    dispatch(addProductToShoppingCartSuccess(productToAdd));
+  } catch (error) {
+    // dispatch(addProductToShoppingCartFailure('Error al agregar este producto al carrito de compras'))
+  }
 };

@@ -9,7 +9,6 @@ interface ProductBuy {
 }
 
 export interface IBuy {
-  id: string;
   date?: Date;
   idType: IdType;
   idClient: string;

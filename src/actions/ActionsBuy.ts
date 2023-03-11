@@ -1,4 +1,4 @@
-import { IPaginBuy } from "../models/buy.interface";
+import { IBuy, IPaginBuy } from "../models/buy.interface";
 import { ActionTypeBuy } from "./actionsType/ActionTypeBuy";
 
 export const buyLoading = () => {
@@ -29,6 +29,20 @@ export const buyDelectSucces = (buyId: string) => {
 };
 
 export const buyDeleteError = (error: string) => {
+  return {
+    type: ActionTypeBuy.LOAD_FAILURE_BUY,
+    payload: error,
+  };
+};
+
+export const buyCreateSucces = (buys: IBuy) => {
+  return {
+    type: ActionTypeBuy.LOAD_SUCCESS_BUY,
+    payload: buys,
+  };
+};
+
+export const buyCreateError = (error: string) => {
   return {
     type: ActionTypeBuy.LOAD_FAILURE_BUY,
     payload: error,

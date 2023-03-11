@@ -1,4 +1,4 @@
-import { IPaginProduct } from "../models/product.interface";
+import { IPaginProduct, IProduct } from "../models/product.interface";
 import { ActionTypeProduct } from "./actionsType/ActionTypeProduct";
 
 export const productLoading = () => {
@@ -29,6 +29,34 @@ export const productDelectSucces = (productId: string) => {
 };
 
 export const productDeleteError = (error: string) => {
+  return {
+    type: ActionTypeProduct.LOAD_FAILURE,
+    payload: error,
+  };
+};
+
+export const productCreateSucces = (productToCreate: IProduct) => {
+  return {
+    type: ActionTypeProduct.CREATE_PRODUCT,
+    payload: productToCreate,
+  };
+};
+
+export const productCreateError = (error: string) => {
+  return {
+    type: ActionTypeProduct.LOAD_FAILURE,
+    payload: error,
+  };
+};
+
+export const addProductToShoppingCartSuccess = (productToAdd: IProduct) => {
+  return {
+    type: ActionTypeProduct.ADD_PRODUCT_TO_SHOPPING,
+    payload: productToAdd,
+  };
+};
+
+export const addProductToShoppingCartError = (error: string) => {
   return {
     type: ActionTypeProduct.LOAD_FAILURE,
     payload: error,

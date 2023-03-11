@@ -12,10 +12,15 @@ export interface IPaginProduct {
   totalElements: number;
 }
 
+export interface IProductsToAdd {
+  productsToBuy: IProduct[];
+}
+
 export interface IStateProduct {
   isLoading: boolean;
   products?: IPaginProduct;
   error: string;
+  productsToShop?: IProductsToAdd
 }
 
 export enum IButtonAction {
